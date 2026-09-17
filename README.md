@@ -74,18 +74,18 @@ CI is GitHub Actions on a public repo.
 ## Design
 
 Every figure in the app splits into two parts: money *you* contributed, and money
-*compounding* produced. So a two-tone stacked band — teal principal, marigold
+*compounding* produced. So a two-tone stacked band — slate principal, emerald green
 returns, hollow remainder — is the growth chart, the goal progress bar and the
 nav indicator. One motif, learned once.
 
 | Token | Hex | Role |
 |---|---|---|
-| Paper | `#F2F1F6` | cool lilac-grey base |
-| Ink | `#1B1B3A` | deep indigo |
-| Principal | `#3E7C7B` | muted teal — what you invested |
-| Returns | `#E8A33D` | marigold — what compounding added |
-| Shortfall | `#B8455E` | deep rose — behind target |
-| Mist | `#6E6E8F` | secondary text |
+| Paper | `#F8FAFC` | clean slate off-white base |
+| Ink | `#0F172A` | deep slate ink |
+| Principal | `#475569` | muted slate — what you invested |
+| Returns | `#10B981` | emerald green — what compounding added |
+| Shortfall | `#F43F5E` | rose red — behind target |
+| Mist | `#64748B` | slate secondary text |
 
 Material dynamic colour is deliberately disabled: letting the wallpaper recolour
 the chart would destroy the only information it encodes.
