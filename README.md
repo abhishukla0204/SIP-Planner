@@ -1,4 +1,4 @@
-# SIP Planner 📈
+# SIP Planner
 
 [![Android Studio](https://img.shields.io/badge/Android%20Studio-2024.2.1-green.svg)](https://developer.android.com/studio)
 [![Kotlin](https://img.shields.io/badge/Kotlin-2.2.10-blue.svg)](https://kotlinlang.org)
@@ -12,7 +12,7 @@ Built entirely on **free, keyless infrastructure** — no paid APIs, no backend 
 
 ---
 
-## 📱 App Screenshots
+## App Screenshots
 
 <p align="center">
   <img src="images/image1.png" width="23%" alt="Portfolio Dashboard" />
@@ -30,7 +30,7 @@ Built entirely on **free, keyless infrastructure** — no paid APIs, no backend 
 
 ---
 
-## 💡 How It Helps
+## How It Helps
 
 Standard SIP calculators only answer *"how much will I have?"* assuming a fixed monthly amount. **SIP Planner** helps you make realistic financial decisions by answering:
 1. **Goal Reality Check:** *"Will my current monthly investment actually reach my target after inflation?"*
@@ -39,15 +39,15 @@ Standard SIP calculators only answer *"how much will I have?"* assuming a fixed 
 
 ### Key Features
 
-- 🧮 **Interactive Calculator:** SIP, One-time Lumpsum, and Reverse-Target calculations with yearly step-up support. Drag sliders or type exact numbers directly with the numeric keyboard.
-- 🎯 **Goal-Based Tracking:** Create inflation-adjusted goals (House Down Payment, Emergency Fund, Education) with real-time on-track / shortfall status.
-- 📊 **Real-Time Portfolio & XIRR:** Log your actual paid SIP instalments. The app prices your holdings with live daily NAVs from AMFI and calculates your weighted **XIRR (Extended Internal Rate of Return)**.
-- 🔍 **Mutual Fund Watchlist:** Search 10,000+ public Indian mutual fund schemes via AMFI (`api.mfapi.in`), view historical NAV graphs, trailing returns (1Y, 3Y, 5Y), and follow your favorite schemes.
-- ⏰ **Offline Reminders:** Local monthly notifications via Android WorkManager to remind you to log your SIP payments — zero push services or external servers required.
+- **Interactive Calculator:** SIP, One-time Lumpsum, and Reverse-Target calculations with yearly step-up support. Drag sliders or type exact numbers directly with the numeric keyboard.
+- **Goal-Based Tracking:** Create inflation-adjusted goals (House Down Payment, Emergency Fund, Education) with real-time on-track / shortfall status.
+- **Real-Time Portfolio & XIRR:** Log your actual paid SIP instalments. The app prices your holdings with live daily NAVs from AMFI and calculates your weighted **XIRR (Extended Internal Rate of Return)**.
+- **Mutual Fund Watchlist:** Search 10,000+ public Indian mutual fund schemes via AMFI (`api.mfapi.in`), view historical NAV graphs, trailing returns (1Y, 3Y, 5Y), and follow your favorite schemes.
+- **Offline Reminders:** Local monthly notifications via Android WorkManager to remind you to log your SIP payments — zero push services or external servers required.
 
 ---
 
-## 🛠️ Tech Stack & Libraries
+## 🛠Tech Stack & Libraries
 
 - **Language:** 100% [Kotlin](https://kotlinlang.org/) (Coroutines, Flow, StateFlow)
 - **UI Framework:** [Jetpack Compose](https://developer.android.com/jetpack/compose) with Material 3 Design System
@@ -61,7 +61,7 @@ Standard SIP calculators only answer *"how much will I have?"* assuming a fixed 
 
 ---
 
-## 🏗️ Architecture & Project Structure
+## 🏗Architecture & Project Structure
 
 The project follows **Clean Architecture** principles separated into a single module with three distinct layers. Dependencies point inward toward the core domain.
 
@@ -85,7 +85,7 @@ ui (Compose + ViewModels)  ──►  domain (Models + Repository Interfaces)  �
 
 ---
 
-## 🎨 Design System: Emerald & Slate
+## Design System: Emerald & Slate
 
 Every calculation and chart in the app separates money into two distinct parts:
 1. **Money You Invested (Principal):** Styled in Slate (`#475569`).
@@ -102,7 +102,7 @@ Every calculation and chart in the app separates money into two distinct parts:
 
 ---
 
-## 🚀 Setup & Installation Guide
+## Setup & Installation Guide
 
 ### Prerequisites
 - **Android Studio:** Ladybug (2024.2.1) or newer
@@ -127,7 +127,7 @@ Every calculation and chart in the app separates money into two distinct parts:
 
 ---
 
-## 📐 Under the Hood: Financial Math
+## Under the Hood: Financial Math
 
 ### 1. Bisection Goal Solver
 Standard closed-form formulas break down when incorporating yearly step-ups or existing saved capital. **`GoalSolver`** uses a binary search (bisection method) over the monotonic future-value function. This converges in fewer than 20 iterations to solve the exact monthly base instalment required for any goal.
@@ -144,9 +144,3 @@ To run the unit test suite covering the financial engine, goal solver, XIRR calc
 ```bash
 ./gradlew testDebugUnitTest
 ```
-
----
-
-## 📄 License
-
-This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) file for details.
