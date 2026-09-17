@@ -187,8 +187,11 @@ fun HomeScreen(
                             color = SipTheme.colors.muted,
                         )
                         Text(
-                            text = holding.xirrPercent?.let { "XIRR ${Money.percent(it)}" }
-                                ?: "NAV unavailable",
+                            text = when {
+                                holding.xirrPercent != null -> "XIRR ${Money.percent(holding.xirrPercent)}"
+                                holding.currentNav != null -> "NAV ₹%.2f".format(holding.currentNav)
+                                else -> "NAV unavailable"
+                            },
                             style = MaterialTheme.typography.labelLarge,
                             color = SipTheme.colors.muted,
                         )
