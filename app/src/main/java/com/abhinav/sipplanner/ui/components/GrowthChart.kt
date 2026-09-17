@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.abhinav.sipplanner.core.finance.ProjectionPoint
 import com.abhinav.sipplanner.ui.theme.SipTheme
+import kotlin.math.abs
 
 /**
  * The app's signature visual: corpus over time, split into the part you paid in
@@ -78,9 +79,11 @@ fun GrowthChart(
                             onDragCancel = { scrubX = null; onScrub(null) },
                         ) { change, _ ->
                             scrubX = change.position.x
+                            val maxMonth = points.lastOrNull()?.monthIndex?.coerceAtLeast(1) ?: 1
                             val ratio = (change.position.x / size.width).coerceIn(0f, 1f)
-                            val index = (ratio * (points.size - 1)).toInt()
-                            onScrub(points.getOrNull(index))
+                            val targetMonth = (ratio * maxMonth).toInt()
+                            val point = points.minByOrNull { abs(it.monthIndex - targetMonth) }
+                            onScrub(point)
                         }
                     }
                 },
@@ -97,16 +100,24 @@ fun GrowthChart(
             val visibleCount = (points.size * progress).toInt().coerceAtLeast(2)
             val visible = points.take(visibleCount)
 
-            val stepX = size.width / (points.size - 1).toFloat()
-            fun xAt(index: Int) = index * stepX
-            fun yAt(value: Double) = size.height - (value / maxValue * size.height).toFloat()
+            val paddingPx = 4.dp.toPx()
+            val topPaddingPx = 8.dp.toPx()
+            val usableWidth = size.width - (paddingPx * 2)
+            val usableHeight = size.height - topPaddingPx - paddingPx
 
-            drawBaseline(colors.hairline)
+            val maxMonth = points.lastOrNull()?.monthIndex?.coerceAtLeast(1) ?: 1
+            fun xAt(monthIndex: Int) = paddingPx + ((monthIndex.toFloat() / maxMonth.toFloat()) * usableWidth)
+            fun yAt(value: Double) = size.height - paddingPx - (((value / maxValue) * usableHeight).toFloat())
+
+            drawBaseline(colors.hairline, paddingPx = paddingPx)
 
             // Band 1 — total corpus, filled in marigold. Drawn first so the
             // principal band sits on top of it and the marigold reads as "the
             // extra above what I paid".
-            val corpusPath = areaPath(visible.map { xAt(it.monthIndex) to yAt(it.value) }, size.height)
+            val corpusPath = areaPath(
+                visible.map { xAt(it.monthIndex) to yAt(it.value) },
+                bottom = size.height - paddingPx,
+            )
             drawPath(
                 path = corpusPath,
                 brush = Brush.verticalGradient(
@@ -115,8 +126,10 @@ fun GrowthChart(
             )
 
             // Band 2 — money actually contributed, solid teal.
-            val investedPath =
-                areaPath(visible.map { xAt(it.monthIndex) to yAt(it.invested) }, size.height)
+            val investedPath = areaPath(
+                visible.map { xAt(it.monthIndex) to yAt(it.invested) },
+                bottom = size.height - paddingPx,
+            )
             drawPath(
                 path = investedPath,
                 brush = Brush.verticalGradient(
@@ -135,8 +148,8 @@ fun GrowthChart(
                 val y = yAt(target)
                 drawLine(
                     color = colors.shortfall,
-                    start = Offset(0f, y),
-                    end = Offset(size.width, y),
+                    start = Offset(paddingPx, y),
+                    end = Offset(size.width - paddingPx, y),
                     strokeWidth = 1.5.dp.toPx(),
                     pathEffect = PathEffect.dashPathEffect(
                         floatArrayOf(10.dp.toPx(), 8.dp.toPx()),
@@ -145,19 +158,21 @@ fun GrowthChart(
             }
 
             scrubX?.let { x ->
-                val clamped = x.coerceIn(0f, size.width)
+                val clamped = x.coerceIn(paddingPx, size.width - paddingPx)
                 drawLine(
                     color = colors.muted,
-                    start = Offset(clamped, 0f),
-                    end = Offset(clamped, size.height),
+                    start = Offset(clamped, topPaddingPx),
+                    end = Offset(clamped, size.height - paddingPx),
                     strokeWidth = 1.dp.toPx(),
                 )
-                val index = ((clamped / size.width) * (points.size - 1)).toInt()
-                points.getOrNull(index)?.let { point ->
+                val ratio = ((clamped - paddingPx) / usableWidth).coerceIn(0f, 1f)
+                val targetMonth = (ratio * maxMonth).toInt()
+                val point = points.minByOrNull { abs(it.monthIndex - targetMonth) }
+                point?.let { p ->
                     drawCircle(
                         color = colors.returns,
                         radius = 5.dp.toPx(),
-                        center = Offset(xAt(point.monthIndex), yAt(point.value)),
+                        center = Offset(xAt(p.monthIndex), yAt(p.value)),
                     )
                 }
             }
@@ -165,11 +180,11 @@ fun GrowthChart(
     }
 }
 
-private fun DrawScope.drawBaseline(color: Color) {
+private fun DrawScope.drawBaseline(color: Color, paddingPx: Float) {
     drawLine(
         color = color,
-        start = Offset(0f, size.height),
-        end = Offset(size.width, size.height),
+        start = Offset(paddingPx, size.height - paddingPx),
+        end = Offset(size.width - paddingPx, size.height - paddingPx),
         strokeWidth = 1.dp.toPx(),
     )
 }
