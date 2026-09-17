@@ -1,0 +1,213 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "151df2c91206956a1e2c4eabb118b7be",
+    "entities": [
+      {
+        "tableName": "goals",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `icon` TEXT NOT NULL, `targetToday` REAL NOT NULL, `targetDate` INTEGER NOT NULL, `monthlyContribution` REAL NOT NULL, `expectedReturnPercent` REAL NOT NULL, `inflationPercent` REAL NOT NULL, `annualStepUpPercent` REAL NOT NULL, `existingCorpus` REAL NOT NULL, `createdAt` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "icon",
+            "columnName": "icon",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "targetToday",
+            "columnName": "targetToday",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "targetDate",
+            "columnName": "targetDate",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "monthlyContribution",
+            "columnName": "monthlyContribution",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "expectedReturnPercent",
+            "columnName": "expectedReturnPercent",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "inflationPercent",
+            "columnName": "inflationPercent",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "annualStepUpPercent",
+            "columnName": "annualStepUpPercent",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "existingCorpus",
+            "columnName": "existingCorpus",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createdAt",
+            "columnName": "createdAt",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        }
+      },
+      {
+        "tableName": "investments",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `schemeCode` INTEGER NOT NULL, `schemeName` TEXT NOT NULL, `date` INTEGER NOT NULL, `amount` REAL NOT NULL, `navAtPurchase` REAL NOT NULL, `goalId` INTEGER)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "schemeCode",
+            "columnName": "schemeCode",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "schemeName",
+            "columnName": "schemeName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "date",
+            "columnName": "date",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "amount",
+            "columnName": "amount",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "navAtPurchase",
+            "columnName": "navAtPurchase",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "goalId",
+            "columnName": "goalId",
+            "affinity": "INTEGER"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_investments_goalId",
+            "unique": false,
+            "columnNames": [
+              "goalId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_investments_goalId` ON `${TABLE_NAME}` (`goalId`)"
+          },
+          {
+            "name": "index_investments_schemeCode",
+            "unique": false,
+            "columnNames": [
+              "schemeCode"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_investments_schemeCode` ON `${TABLE_NAME}` (`schemeCode`)"
+          }
+        ]
+      },
+      {
+        "tableName": "tracked_funds",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`schemeCode` INTEGER NOT NULL, `schemeName` TEXT NOT NULL, `fundHouse` TEXT, `category` TEXT, `schemeType` TEXT, `cachedNav` REAL, `cachedNavDate` INTEGER, PRIMARY KEY(`schemeCode`))",
+        "fields": [
+          {
+            "fieldPath": "schemeCode",
+            "columnName": "schemeCode",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "schemeName",
+            "columnName": "schemeName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "fundHouse",
+            "columnName": "fundHouse",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "category",
+            "columnName": "category",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "schemeType",
+            "columnName": "schemeType",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "cachedNav",
+            "columnName": "cachedNav",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "cachedNavDate",
+            "columnName": "cachedNavDate",
+            "affinity": "INTEGER"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "schemeCode"
+          ]
+        }
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '151df2c91206956a1e2c4eabb118b7be')"
+    ]
+  }
+}
