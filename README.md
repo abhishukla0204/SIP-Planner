@@ -4,66 +4,84 @@
 [![Kotlin](https://img.shields.io/badge/Kotlin-2.2.10-blue.svg)](https://kotlinlang.org)
 [![Min SDK](https://img.shields.io/badge/Min%20SDK-26-orange.svg)](https://developer.android.com)
 [![Compile SDK](https://img.shields.io/badge/Compile%20SDK-37-brightgreen.svg)](https://developer.android.com)
-[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-An **offline-first, privacy-focused Android application** for planning mutual fund SIPs, goal-based wealth tracking, and portfolio XIRR management.
+An **offline-first, privacy-focused Android application** for planning mutual fund SIPs, goal-based wealth tracking, and portfolio performance analysis.
 
 Built entirely on **free, keyless infrastructure** — no paid APIs, no backend cloud servers, no user tracking, and no subscriptions.
 
 ---
 
-## App Screenshots
+## App Modules & Screen Previews
+
+### 1. Portfolio Management (`Portfolio` Tab)
 
 <p align="center">
-  <img src="images/image1.png" width="23%" alt="Portfolio Dashboard" />
-  <img src="images/image2.png" width="23%" alt="SIP Calculator" />
-  <img src="images/image3.png" width="23%" alt="Goal Planning" />
-  <img src="images/image4.png" width="23%" alt="Goal Details" />
+  <img src="images/image1.png" width="32%" alt="Portfolio Dashboard" />
 </p>
 
-<p align="center">
-  <img src="images/image5.png" width="23%" alt="Mutual Fund Search" />
-  <img src="images/image6.png" width="23%" alt="Fund Detail & NAV Chart" />
-  <img src="images/image7.png" width="23%" alt="Log Investment Dialog" />
-  <img src="images/image8.png" width="23%" alt="Target Calculator" />
-</p>
+* **Live Portfolio Valuation:** Tracks overall net portfolio value powered by daily AMFI NAV updates.
+* **Gain / Loss Breakdown:** Visualizes capital contributed (Slate) versus compounding gains added (Emerald Green).
+* **Scheme Holdings:** Displays all mutual fund holdings with total units accumulated and current NAV prices.
+* **`+ Log Investment`:** Quick dialog to log paid SIP instalments with auto-filled NAVs.
 
 ---
 
-## How It Helps
+### 2. Wealth & SIP Calculators (`Plan` Tab)
 
-Standard SIP calculators only answer *"how much will I have?"* assuming a fixed monthly amount. **SIP Planner** helps you make realistic financial decisions by answering:
-1. **Goal Reality Check:** *"Will my current monthly investment actually reach my target after inflation?"*
-2. **Reverse Target Solver:** *"How much do I need to invest monthly starting today to buy a house or retire in 15 years?"*
-3. **True Portfolio Performance:** *"What is my actual XIRR return across irregular SIP payments made at different dates?"*
+<p align="center">
+  <img src="images/image2.png" width="30%" alt="Monthly SIP Calculator" />
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <img src="images/image3.png" width="30%" alt="Lumpsum Calculator" />
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <img src="images/image4.png" width="30%" alt="Reverse Target Calculator" />
+</p>
 
-### Key Features
-
-- **Interactive Calculator:** SIP, One-time Lumpsum, and Reverse-Target calculations with yearly step-up support. Drag sliders or type exact numbers directly with the numeric keyboard.
-- **Goal-Based Tracking:** Create inflation-adjusted goals (House Down Payment, Emergency Fund, Education) with real-time on-track / shortfall status.
-- **Real-Time Portfolio & XIRR:** Log your actual paid SIP instalments. The app prices your holdings with live daily NAVs from AMFI and calculates your weighted **XIRR (Extended Internal Rate of Return)**.
-- **Mutual Fund Watchlist:** Search 10,000+ public Indian mutual fund schemes via AMFI (`api.mfapi.in`), view historical NAV graphs, trailing returns (1Y, 3Y, 5Y), and follow your favorite schemes.
-- **Offline Reminders:** Local monthly notifications via Android WorkManager to remind you to log your SIP payments — zero push services or external servers required.
+* **Monthly SIP Mode (`image2`):** Projects compounding wealth for regular or yearly step-up SIPs.
+* **One-Time Lumpsum Mode (`image3`):** Projects growth for single lump sum investments over time.
+* **Reach a Target Mode (`image4`):** Reverse-calculates the exact monthly instalment required to land on any target amount.
+* **Dual Control Inputs:** Smooth slider dragging combined with interactive numeric keyboard input boxes.
 
 ---
 
-## 🛠Tech Stack & Libraries
+### 3. Goal-Based Planning (`Goals` Tab)
 
-- **Language:** 100% [Kotlin](https://kotlinlang.org/) (Coroutines, Flow, StateFlow)
+<p align="center">
+  <img src="images/image5.png" width="30%" alt="Goal Input & Assumptions" />
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <img src="images/image6.png" width="30%" alt="Goal Inflation Verdict" />
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <img src="images/image7.png" width="30%" alt="Goals Dashboard" />
+</p>
+
+* **New Goal Setup (`image5`):** Input target cost today, target year, monthly investment capacity, and expected inflation rate.
+* **Live Inflation Verdict (`image6`):** Calculates future inflated target cost and provides an instant verdict (*"This plan gets you there"* or *"Short by ₹X.XX L"*).
+* **Goals Dashboard (`image7`):** Overview of all active goals, monthly commitment total, and on-track status.
+
+---
+
+### 4. Mutual Fund Watchlist & Search (`Funds` Tab)
+
+<p align="center">
+  <img src="images/image8.png" width="32%" alt="Mutual Fund Watchlist & Search" />
+</p>
+
+* **Keyless AMFI Search:** Search over 10,000+ public Indian mutual fund schemes via `api.mfapi.in`.
+* **Following Watchlist:** Pin your favorite mutual funds to the top of the Funds screen with live NAV prices.
+* **Historical NAV & Returns:** View historical NAV line charts and annualised 1Y, 3Y, and 5Y trailing returns.
+
+---
+
+## Tech Stack & Architecture
+
 - **UI Framework:** [Jetpack Compose](https://developer.android.com/jetpack/compose) with Material 3 Design System
-- **Architecture:** Clean Architecture + Unidirectional Data Flow (UDF)
+- **Architecture:** Clean Architecture (Core, Domain, Data, UI) + Unidirectional Data Flow (UDF)
 - **Dependency Injection:** [Hilt](https://developer.android.com/training/dependency-injection/hilt-android)
-- **Local Database:** [Room Database](https://developer.android.com/training/data-storage/room) with KSP
-- **Networking:** [Retrofit 2](https://square.github.io/retrofit/) + [OkHttp 5](https://square.github.io/okhttp/) + Kotlinx Serialization
-- **Background Jobs:** [WorkManager](https://developer.android.com/topic/libraries/architecture/workmanager)
+- **Local Database:** [Room Database](https://developer.android.com/training/data-storage/room)
+- **Networking:** Retrofit 2 + OkHttp 5 + Kotlinx Serialization
+- **Background Work:** WorkManager for local monthly notifications
 - **Graphics:** Custom Compose `Canvas` drawing for zero-dependency high-performance charts
-- **Testing:** JUnit4, Kotlinx Coroutines Test, Turbine, MockK
 
----
-
-## 🏗Architecture & Project Structure
-
-The project follows **Clean Architecture** principles separated into a single module with three distinct layers. Dependencies point inward toward the core domain.
+### Architecture Diagram & Layer Breakdown
 
 ```
 ui (Compose + ViewModels)  ──►  domain (Models + Repository Interfaces)  ◄──  data (Room + Retrofit)
@@ -71,76 +89,38 @@ ui (Compose + ViewModels)  ──►  domain (Models + Repository Interfaces)  �
                                      core/finance (Pure Kotlin)
 ```
 
-### Module Breakdown
-
-| Directory | Role & Description |
+| Layer | Responsibility |
 | :--- | :--- |
-| **`core/finance`** | Pure Kotlin financial math engine (SIP calculations, Binary Search Goal Solver, Newton-Raphson XIRR). Zero Android dependencies, 100% unit-tested. |
+| **`core/finance`** | Pure Kotlin financial math engine (SIP math, Bisection Goal Solver, Newton-Raphson XIRR). Zero Android dependencies, 100% unit tested. |
 | **`core/format`** | Indian currency formatting engine (Lakh / Crore Indian Numbering System formatting). |
-| **`domain`** | Pure business models and repository abstractions. Independent of Room or Retrofit. |
-| **`data`** | Room DAOs and entities, Retrofit REST client, mappers, and repository implementations. |
-| **`ui`** | Jetpack Compose screens, ViewModels, Emerald & Slate theme, custom Canvas charts. |
-| **`di`** | Dependency injection Hilt modules. |
-| **`work`** | WorkManager background workers for local monthly SIP reminders. |
+| **`domain`** | Business entities and repository interfaces. |
+| **`data`** | Room DAOs, Retrofit API client (`api.mfapi.in`), and repository implementations. |
+| **`ui`** | Jetpack Compose screens, ViewModels, Emerald & Slate theme, Canvas charts. |
 
 ---
 
-## Design System: Emerald & Slate
+## Financial Engine: Under the Hood
 
-Every calculation and chart in the app separates money into two distinct parts:
-1. **Money You Invested (Principal):** Styled in Slate (`#475569`).
-2. **Compounding Gains (Returns):** Styled in Emerald Green (`#10B981`).
+### 1. Bisection Goal Solver
+Standard algebraic formulas break down when incorporating yearly step-ups or existing saved capital. **`GoalSolver`** uses a binary search (bisection method) over the monotonic future-value function to solve the exact monthly base instalment required for any goal in under 20 iterations.
 
-| Token | Hex | Usage |
-| :--- | :--- | :--- |
-| **Paper** | `#F8FAFC` | Clean slate background |
-| **Ink** | `#0F172A` | Primary text and dark elements |
-| **Principal** | `#475569` | Muted slate — capital invested by user |
-| **Returns** | `#10B981` | Emerald green — compounding profit generated |
-| **Shortfall** | `#F43F5E` | Rose red — shortfall / loss |
-| **Mist** | `#64748B` | Secondary text |
+### 2. Newton-Raphson XIRR
+CAGR assumes a single initial investment. Because SIPs consist of multiple cash flows on different dates, **SIP Planner** calculates true yield using a **Newton-Raphson XIRR solver**, falling back to bisection if derivatives approach zero.
 
 ---
 
-## Setup & Installation Guide
+## Setup & Building
 
 ### Prerequisites
 - **Android Studio:** Ladybug (2024.2.1) or newer
 - **JDK:** Version 17
 - **Android SDK:** `compileSdk 37`, `minSdk 26`
 
-### Building the App
-
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/abhishukla0204/SIP-Planner.git
-   cd SIP-Planner
-   ```
-
-2. **Open in Android Studio:**
-   - Select **File → Open** and choose the `SIP-Planner` directory.
-   - Allow Gradle to sync dependencies.
-
-3. **Run on Emulator or Physical Device:**
-   - Select the **`app`** run configuration from the top toolbar.
-   - Press **Run ▶** or press `Shift + F10`.
-
----
-
-## Under the Hood: Financial Math
-
-### 1. Bisection Goal Solver
-Standard closed-form formulas break down when incorporating yearly step-ups or existing saved capital. **`GoalSolver`** uses a binary search (bisection method) over the monotonic future-value function. This converges in fewer than 20 iterations to solve the exact monthly base instalment required for any goal.
-
-### 2. Newton-Raphson XIRR
-CAGR assumes a single initial investment. Because SIPs consist of multiple cash flows on different dates, **SIP Planner** calculates true yield using a **Newton-Raphson XIRR solver**, falling back to bisection if the derivative approaches zero.
-
----
-
-## 🧪 Running Tests
-
-To run the unit test suite covering the financial engine, goal solver, XIRR calculations, and mappers:
-
 ```bash
+# Clone the repository
+git clone https://github.com/abhishukla0204/SIP-Planner.git
+
+# Run unit tests
 ./gradlew testDebugUnitTest
 ```
+
