@@ -13,11 +13,13 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.math.pow
 
 data class FundDetailState(
     val loading: Boolean = true,
     val fund: Fund? = null,
     val history: List<NavPoint> = emptyList(),
+    val isTracked: Boolean = false,
     val error: String? = null,
 ) {
     val latest: NavPoint? get() = history.firstOrNull()
@@ -33,7 +35,7 @@ data class FundDetailState(
         if (days <= 365) return simple
 
         val years = days / 365.0
-        return (Math.pow(newest.nav / older.nav, 1.0 / years) - 1.0) * 100.0
+        return ((newest.nav / older.nav).pow(1.0 / years) - 1.0) * 100.0
     }
 }
 
@@ -48,7 +50,10 @@ class FundDetailViewModel @Inject constructor(
     private val _state = MutableStateFlow(FundDetailState())
     val state: StateFlow<FundDetailState> = _state.asStateFlow()
 
-    init { load() }
+    init {
+        load()
+        observeTracked()
+    }
 
     fun load() = viewModelScope.launch {
         _state.update { it.copy(loading = true, error = null) }
@@ -66,7 +71,19 @@ class FundDetailViewModel @Inject constructor(
             }
     }
 
-    fun track() = viewModelScope.launch {
-        _state.value.fund?.let { fundRepository.track(it) }
+    private fun observeTracked() = viewModelScope.launch {
+        fundRepository.observeTracked().collect { trackedList ->
+            val isCurrentlyTracked = trackedList.any { it.fund.schemeCode == schemeCode }
+            _state.update { it.copy(isTracked = isCurrentlyTracked) }
+        }
+    }
+
+    fun toggleTrack() = viewModelScope.launch {
+        val current = _state.value
+        if (current.isTracked) {
+            fundRepository.untrack(schemeCode)
+        } else {
+            current.fund?.let { fundRepository.track(it) }
+        }
     }
 }

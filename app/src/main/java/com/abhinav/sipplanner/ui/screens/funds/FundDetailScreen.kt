@@ -13,12 +13,14 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -142,8 +144,24 @@ fun FundDetailScreen(
                     )
                 }
 
-                Button(onClick = viewModel::track, modifier = Modifier.fillMaxWidth()) {
-                    Text("Follow this fund")
+                if (state.isTracked) {
+                    OutlinedButton(
+                        onClick = viewModel::toggleTrack,
+                        modifier = Modifier.fillMaxWidth(),
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Check,
+                            contentDescription = null,
+                        )
+                        Text("Following", modifier = Modifier.padding(start = 8.dp))
+                    }
+                } else {
+                    Button(
+                        onClick = viewModel::toggleTrack,
+                        modifier = Modifier.fillMaxWidth(),
+                    ) {
+                        Text("Follow this fund")
+                    }
                 }
 
                 Spacer(Modifier.height(24.dp))
