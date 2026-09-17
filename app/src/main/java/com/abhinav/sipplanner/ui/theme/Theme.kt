@@ -12,7 +12,7 @@ import androidx.compose.ui.graphics.Color
 /**
  * The two data colours don't belong in Material's ColorScheme — they aren't
  * "primary" or "secondary", they're semantic. They ride alongside it instead, so
- * a chart can't accidentally pick up a theme colour that means something else.
+ * a chart can'token accidentally pick up a theme colour that means something else.
  */
 data class SipColors(
     val principal: Color,
@@ -70,7 +70,7 @@ private val DarkScheme = darkColorScheme(
 
 /**
  * Note: dynamic colour is deliberately switched off. The whole point of the
- * teal/marigold pairing is that it means something; letting the wallpaper
+ * slate/emerald pairing is that it means something; letting the wallpaper
  * recolour it would destroy the only piece of information the chart encodes.
  */
 @Composable
