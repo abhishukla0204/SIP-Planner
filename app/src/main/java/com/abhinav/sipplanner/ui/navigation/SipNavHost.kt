@@ -30,6 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination.Companion.hasRoute
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -68,6 +69,16 @@ fun SipNavHost(navController: NavHostController = rememberNavController()) {
     // The bar hides on pushed screens so a detail view gets the full height.
     val showBar = tabs.any { tab -> currentDestination?.hasRoute(tab.route) == true }
 
+    fun navigateToTab(destination: Destination) {
+        navController.navigate(destination) {
+            popUpTo(navController.graph.findStartDestination().id) {
+                saveState = true
+            }
+            launchSingleTop = true
+            restoreState = true
+        }
+    }
+
     Scaffold(
         containerColor = MaterialTheme.colorScheme.background,
         bottomBar = {
@@ -75,14 +86,7 @@ fun SipNavHost(navController: NavHostController = rememberNavController()) {
                 BandNavBar(
                     tabs = tabs,
                     isSelected = { tab -> currentDestination?.hasRoute(tab.route) == true },
-                    onSelect = { tab ->
-                        navController.navigate(tab.destination) {
-                            popUpTo(Destination.Home) { saveState = true }
-                            launchSingleTop = true
-                            restoreState = true
-                        }
-                    },
-                )
+                ) { tab -> navigateToTab(tab.destination) }
             }
         },
     ) { padding ->
@@ -92,7 +96,7 @@ fun SipNavHost(navController: NavHostController = rememberNavController()) {
             modifier = Modifier.padding(padding),
         ) {
             composable<Destination.Home> {
-                HomeScreen(onOpenGoals = { navController.navigate(Destination.Goals) })
+                HomeScreen(onOpenGoals = { navigateToTab(Destination.Goals) })
             }
             composable<Destination.Calculator> {
                 CalculatorScreen()
@@ -135,7 +139,7 @@ private fun BandNavBar(
                 .fillMaxWidth()
                 .height(1.dp)
                 .background(SipTheme.colors.hairline),
-        )
+        ) { }
         Row(
             Modifier
                 .fillMaxWidth()
@@ -160,7 +164,7 @@ private fun BandNavBar(
                             .width(if (selected) 22.dp else 0.dp)
                             .height(3.dp)
                             .background(SipTheme.colors.returns),
-                    )
+                    ) { }
                     Spacer(Modifier.height(7.dp))
                     Icon(
                         imageVector = tab.icon,
