@@ -36,9 +36,9 @@ Built entirely on **free, keyless infrastructure** — no paid APIs, no backend 
   <img src="images/image4.png" width="30%" alt="Reverse Target Calculator" />
 </p>
 
-* **Monthly SIP Mode (`image2`):** Projects compounding wealth for regular or yearly step-up SIPs.
-* **One-Time Lumpsum Mode (`image3`):** Projects growth for single lump sum investments over time.
-* **Reach a Target Mode (`image4`):** Reverse-calculates the exact monthly instalment required to land on any target amount.
+* **Monthly SIP Mode (`image 1`):** Projects compounding wealth for regular or yearly step-up SIPs.
+* **One-Time Lumpsum Mode (`image 2`):** Projects growth for single lump sum investments over time.
+* **Reach a Target Mode (`image4 3`):** Reverse-calculates the exact monthly instalment required to land on any target amount.
 * **Dual Control Inputs:** Smooth slider dragging combined with interactive numeric keyboard input boxes.
 
 ---
@@ -53,9 +53,9 @@ Built entirely on **free, keyless infrastructure** — no paid APIs, no backend 
   <img src="images/image7.png" width="30%" alt="Goals Dashboard" />
 </p>
 
-* **New Goal Setup (`image5`):** Input target cost today, target year, monthly investment capacity, and expected inflation rate.
-* **Live Inflation Verdict (`image6`):** Calculates future inflated target cost and provides an instant verdict (*"This plan gets you there"* or *"Short by ₹X.XX L"*).
-* **Goals Dashboard (`image7`):** Overview of all active goals, monthly commitment total, and on-track status.
+* **New Goal Setup (`image 1`):** Input target cost today, target year, monthly investment capacity, and expected inflation rate.
+* **Live Inflation Verdict (`image 2`):** Calculates future inflated target cost and provides an instant verdict (*"This plan gets you there"* or *"Short by ₹X.XX L"*).
+* **Goals Dashboard (`image 3`):** Overview of all active goals, monthly commitment total, and on-track status.
 
 ---
 
