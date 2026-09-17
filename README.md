@@ -38,7 +38,7 @@ Built entirely on **free, keyless infrastructure** — no paid APIs, no backend 
 
 * **Monthly SIP Mode (`image 1`):** Projects compounding wealth for regular or yearly step-up SIPs.
 * **One-Time Lumpsum Mode (`image 2`):** Projects growth for single lump sum investments over time.
-* **Reach a Target Mode (`image4 3`):** Reverse-calculates the exact monthly instalment required to land on any target amount.
+* **Reach a Target Mode (`image 3`):** Reverse-calculates the exact monthly instalment required to land on any target amount.
 * **Dual Control Inputs:** Smooth slider dragging combined with interactive numeric keyboard input boxes.
 
 ---
