@@ -93,6 +93,8 @@ fun AddGoalScreen(
                     value = state.targetToday.toFloat(),
                     onValueChange = { viewModel.setTarget(it.toDouble()) },
                     valueRange = 50_000f..5_00_00_000f,
+                    isEditable = true,
+                    prefix = "₹ ",
                 )
                 Spacer(Modifier.height(12.dp))
                 LabeledSlider(
@@ -110,6 +112,8 @@ fun AddGoalScreen(
                     value = state.monthlyContribution.toFloat(),
                     onValueChange = { viewModel.setMonthly(it.toDouble()) },
                     valueRange = 500f..2_00_000f,
+                    isEditable = true,
+                    prefix = "₹ ",
                 )
                 Spacer(Modifier.height(12.dp))
                 LabeledSlider(
@@ -118,6 +122,8 @@ fun AddGoalScreen(
                     value = state.existingCorpus.toFloat(),
                     onValueChange = { viewModel.setExistingCorpus(it.toDouble()) },
                     valueRange = 0f..1_00_00_000f,
+                    isEditable = true,
+                    prefix = "₹ ",
                 )
             }
 
@@ -134,6 +140,9 @@ fun AddGoalScreen(
                     value = state.expectedReturn.toFloat(),
                     onValueChange = { viewModel.setReturn(it.toDouble()) },
                     valueRange = 1f..24f,
+                    isEditable = true,
+                    suffix = " %",
+                    isDecimal = true,
                 )
                 Spacer(Modifier.height(12.dp))
                 LabeledSlider(

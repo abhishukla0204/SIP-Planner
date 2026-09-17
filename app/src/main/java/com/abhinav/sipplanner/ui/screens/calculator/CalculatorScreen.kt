@@ -104,6 +104,8 @@ fun CalculatorScreen(
                     value = state.monthlyAmount.toFloat(),
                     onValueChange = { viewModel.setMonthly(it.toDouble()) },
                     valueRange = 500f..2_00_000f,
+                    isEditable = true,
+                    prefix = "₹ ",
                 )
                 CalculatorMode.Lumpsum -> LabeledSlider(
                     label = "One-time investment",
@@ -111,6 +113,8 @@ fun CalculatorScreen(
                     value = state.lumpsum.toFloat(),
                     onValueChange = { viewModel.setLumpsum(it.toDouble()) },
                     valueRange = 5_000f..1_00_00_000f,
+                    isEditable = true,
+                    prefix = "₹ ",
                 )
                 CalculatorMode.Target -> LabeledSlider(
                     label = "Amount you want",
@@ -118,6 +122,8 @@ fun CalculatorScreen(
                     value = state.targetAmount.toFloat(),
                     onValueChange = { viewModel.setTarget(it.toDouble()) },
                     valueRange = 1_00_000f..10_00_00_000f,
+                    isEditable = true,
+                    prefix = "₹ ",
                 )
             }
 
@@ -140,6 +146,9 @@ fun CalculatorScreen(
                 value = state.expectedReturn.toFloat(),
                 onValueChange = { viewModel.setReturn(it.toDouble()) },
                 valueRange = 1f..24f,
+                isEditable = true,
+                suffix = " %",
+                isDecimal = true,
             )
 
             if (state.mode != CalculatorMode.Lumpsum) {
